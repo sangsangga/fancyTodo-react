@@ -2,10 +2,42 @@ import React from "react"
 
 function AddTodo () {
 
+  function postTodo (event) {
+    event.preventDefault()
+    const formData = event.target
+    const {title} = formData
+    const {description} = formData
+    const {due_date} = formData
+
+    const data = {
+      title:title.value,
+      description: description.value,
+      due_date:due_date.value
+    }
+
+    fetch("http://localhost:3000/todos", {
+      method: "POST",
+      headers: {
+        access_token:localStorage.getItem('access_token'),
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(result => {
+        console.log(result);
+        console.log("success")
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+  }
+
   return (
     <React.Fragment>
       <h1>Add Todo</h1>
-      <form action="" id="form-addTodo">
+      <form action="" id="form-addTodo" onSubmit={postTodo}>
         <div className="form-group" >
             <label for="title">Title</label><br/>
             <input type="text" name="title" id="title-input" className="form-control"/>
