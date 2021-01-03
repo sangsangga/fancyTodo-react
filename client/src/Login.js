@@ -2,20 +2,53 @@ import React from "react"
 import GithubLogo from "./assets/img/Octocat.png"
 
 function Login () {
+  
+  const [email, setEmail] = React.useState("")
+  const [password, setPassword] = React.useState("")
+
+  function postLogin(event) {
+    event.preventDefault()
+    
+    const inputEmail = event.target.email.value
+    const inputPassword = event.target.password.value
+    setEmail(inputEmail)
+    setPassword(inputPassword)
+    const data = {
+      email,
+      password
+    }
+
+
+
+    fetch("http://localhost:3000/users/login", {
+      method:"POST",
+      headers:{
+        'Content-Type': 'application/json',
+      },
+      body:JSON.stringify(data)
+    })
+      .then(res => res.json())
+      .then(result => {
+        localStorage.setItem('access_token', result.token)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
 
   return (
     <div id="notLoggedIn-page">
       <h1>Log In</h1>
       
-      <form action="" id="form-login" className="form-group">
+      <form action="" id="form-login" className="form-group" onSubmit={postLogin}>
         <div className="form-group" >
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" className="form-control" id="emailLogin-input" aria-describedby="emailHelp" placeholder="Enter email"/>
+            <label htmlFor="exampleInputEmail1">Email address</label>
+            <input name="email" type="email" className="form-control" id="emailLogin-input" aria-describedby="emailHelp" placeholder="Enter email"/>
             <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div className="form-group">
-          <label for="passwordLogin-input">Password</label>
-          <input type="password" className="form-control" id="passwordLogin-input" placeholder="Password"/>
+          <label htmlFor="passwordLogin-input">Password</label>
+          <input name="password" type="password" className="form-control" id="passwordLogin-input" placeholder="Password"/>
         </div>
         <button type="submit" className="btn btn-primary">Log In</button>
       </form>

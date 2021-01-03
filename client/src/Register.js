@@ -30,6 +30,8 @@ function Register () {
       })
 
   }
+
+  
   return (
     <div id="register-page">
       <h1>Register</h1>
