@@ -200,6 +200,7 @@ class Controller {
          email:req.body.email,
          password:req.body.password
       }
+      console.log(req.body)
       try{
          const duplicate = await User.findOne({where:{email:target.email}})
          if(duplicate){
