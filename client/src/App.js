@@ -4,15 +4,17 @@ import Navbar from './Navbar'
 import Register from './Register'
 import Login from './Login'
 import MainPage from './MainPage';
+import React from "react"
 
 function App() {
+  const [access_token, setAccessToken] = React.useState(localStorage.getItem("access_token"))
   return (
     <div>
       <Navbar/>
       <div className="container">
         <Register/>
         <Login/>
-        <MainPage/>
+        {access_token && <MainPage/>}
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react"
 
-function AddTodo () {
+function AddTodo (props) {
 
   function postTodo (event) {
     event.preventDefault()
@@ -27,6 +27,7 @@ function AddTodo () {
       .then(result => {
         console.log(result);
         console.log("success")
+        props.fetchTodo()
       })
       .catch(err => {
         console.log(err);
